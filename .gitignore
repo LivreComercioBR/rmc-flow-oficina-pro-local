@@ -1,0 +1,13 @@
+bin/
+obj/
+*.exe
+*.msi
+*.pdb
+*.db
+*.sqlite
+*.sqlite3
+*.lic
+license-private.pem
+*.key
+*.pfx
+*.zip
