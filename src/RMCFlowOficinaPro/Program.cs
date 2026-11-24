@@ -1,0 +1,25 @@
+using System;
+using System.Windows.Forms;
+
+namespace RMCFlowOficinaPro
+{
+    internal static class Program
+    {
+        [STAThread]
+        private static void Main()
+        {
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            var database = new Infrastructure.LocalDatabase();
+            if (!database.IsActivated()) { Application.Run(new MainForm(database)); return; }
+            if (!database.HasUsers())
+            {
+                using (var setup = new FirstUserForm(database)) { if (setup.ShowDialog() != DialogResult.OK) return; }
+            }
+            using (var login = new LoginForm(database))
+            {
+                if (login.ShowDialog() == DialogResult.OK) Application.Run(new AppForm(database, login.User));
+            }
+        }
+    }
+}
